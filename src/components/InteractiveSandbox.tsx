@@ -131,8 +131,9 @@ export function InteractiveSandbox() {
           </p>
         </div>
 
-        {/* Sandbox Console Container */}
-        <div className="max-w-5xl mx-auto rounded-2xl border border-slate-800 bg-[#0E1422] shadow-2xl p-6 sm:p-8">
+        {/* Sandbox Console Double-Bezel Container */}
+        <div className="max-w-5xl mx-auto p-2 sm:p-2.5 rounded-[2.2rem] bg-gradient-to-b from-white/[0.08] via-white/[0.03] to-transparent border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)]">
+          <div className="rounded-[calc(2.2rem-0.625rem)] border border-white/[0.04] bg-[#090D17] shadow-2xl p-6 sm:p-8">
           {/* Top Contract Selectors */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800">
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
@@ -298,6 +299,7 @@ export function InteractiveSandbox() {
               </div>
             </div>
           )}
+        </div>
         </div>
       </div>
     </section>

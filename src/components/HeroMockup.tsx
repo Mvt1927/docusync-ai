@@ -87,7 +87,8 @@ export function HeroMockup() {
   };
 
   return (
-    <div className="relative w-full rounded-2xl border border-slate-800 bg-[#0B0F19]/90 shadow-2xl shadow-indigo-950/40 backdrop-blur-xl overflow-hidden">
+    <div className="relative w-full p-2 sm:p-2.5 rounded-[2.2rem] bg-gradient-to-b from-white/[0.1] via-white/[0.04] to-transparent border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.15)]">
+      <div className="rounded-[calc(2.2rem-0.625rem)] border border-white/[0.05] bg-[#080C16] overflow-hidden shadow-2xl">
       {/* Window Title Bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800/90 bg-slate-950/70">
         <div className="flex items-center gap-2">
@@ -343,6 +344,7 @@ export function HeroMockup() {
             </Button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

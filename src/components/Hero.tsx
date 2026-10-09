@@ -26,43 +26,45 @@ export function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Above-The-Fold Copy & CTAs */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          {/* Announcement pill badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/70 border border-indigo-500/30 text-indigo-300 text-xs font-medium mb-6 shadow-sm shadow-indigo-950 hover:border-indigo-500/50 transition-colors">
-            <span className="flex size-2 rounded-full bg-cyan-400 animate-ping" />
-            <span>Next-Gen Legal AI</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-cyan-300 font-semibold">Zero Hallucination Guarantee</span>
-            <span className="text-slate-600">•</span>
-            <span>1M+ Context Window</span>
+          {/* Microscopic Eyebrow Tag */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-indigo-300 text-[11px] font-mono uppercase tracking-[0.15em] mb-8 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+            <span className="flex size-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
+            <span>Deterministic Legal AI</span>
+            <span className="text-white/20">•</span>
+            <span className="text-cyan-300 font-semibold">Zero Hallucinations</span>
+            <span className="text-white/20">•</span>
+            <span>1M+ Tokens</span>
           </div>
 
-          {/* High-Impact Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+          {/* High-Impact Headline with Negative Tracking */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.06] mb-6 text-balance">
             Enterprise Contract Intelligence at{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-200 to-indigo-200">
               Lightning Speed
             </span>
           </h1>
 
-          {/* Subheadline (Clean, no AI slop) */}
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+          {/* Subheadline (Refined width and line-height) */}
+          <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed mb-9 max-w-2xl mx-auto font-normal">
             Eliminate manual contract review bottlenecks. Instantly extract structured risks, audit legal clauses against your company playbook, and auto-flag liabilities in seconds.
           </p>
 
-          {/* Dual CTAs (Optimized for CRO) */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-5">
+          {/* Dual CTAs with Button-in-Button Trailing Icon */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-6">
             <a
               href="#trial"
-              className="w-full sm:w-auto h-12 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 border border-indigo-400/30 transition-all inline-flex items-center justify-center gap-2"
+              className="group w-full sm:w-auto h-12 pl-6 pr-2 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-white shadow-[0_12px_32px_rgba(99,102,241,0.35),inset_0_1px_1px_rgba(255,255,255,0.25)] border border-white/20 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] inline-flex items-center justify-center gap-3"
             >
-              <Calendar className="size-4" />
+              <Calendar className="size-4 text-indigo-100" />
               <span>Book a Demo</span>
-              <ArrowRight className="size-4 ml-1" />
+              <span className="size-8 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ArrowRight className="size-3.5" />
+              </span>
             </a>
 
             <a
               href="#sandbox"
-              className="w-full sm:w-auto h-12 px-6 rounded-xl font-semibold text-sm border border-slate-700 bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white backdrop-blur-sm transition-all inline-flex items-center justify-center gap-2"
+              className="w-full sm:w-auto h-12 px-6 rounded-full font-semibold text-xs sm:text-sm border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] text-slate-200 hover:text-white backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] inline-flex items-center justify-center gap-2.5"
             >
               <Play className="size-3.5 text-cyan-400 fill-cyan-400/20" />
               <span>Try Interactive Sandbox</span>

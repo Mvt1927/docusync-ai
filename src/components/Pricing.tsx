@@ -145,21 +145,21 @@ export function Pricing() {
                 </CardDescription>
 
                 {/* Price Display */}
-                <div className="pt-4 pb-2 border-b border-slate-800/80">
+                <div className="pt-4 pb-2 border-b border-white/[0.08]">
                   {tier.monthlyPrice !== null ? (
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-black text-white font-mono">
+                      <span className="text-4xl sm:text-5xl font-black text-white font-mono tabular-nums tracking-tight">
                         ${annualBilling ? tier.annualPrice : tier.monthlyPrice}
                       </span>
-                      <span className="text-xs text-slate-400">/month</span>
+                      <span className="text-xs text-slate-400 font-medium">/month</span>
                       {annualBilling && (
-                        <span className="text-[10px] text-slate-400 ml-2">
+                        <span className="text-[10px] text-cyan-300 ml-2 font-mono">
                           billed annually
                         </span>
                       )}
                     </div>
                   ) : (
-                    <div className="text-3xl font-black text-white">Custom Quote</div>
+                    <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">Custom Quote</div>
                   )}
                 </div>
               </CardHeader>
