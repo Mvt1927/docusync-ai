@@ -16,6 +16,30 @@ export const metadata: Metadata = {
   title: "DocuSync AI — Enterprise Contract Intelligence at Lightning Speed",
   description:
     "Turn complex 50+ page commercial contracts into instant, actionable risk intelligence. Clause comparison, automated redlines, and legal compliance audits with zero hallucination.",
+  keywords: [
+    "Legal AI",
+    "Contract Review",
+    "B2B SaaS",
+    "Compliance Audit",
+    "Automated Redlining",
+    "Enterprise Contract Intelligence",
+  ],
+  authors: [{ name: "DocuSync AI" }],
+  openGraph: {
+    title: "DocuSync AI — Enterprise Contract Intelligence",
+    description:
+      "Eliminate contract review bottlenecks. Instant structured risks & playbook compliance with zero hallucination.",
+    url: "https://docusync.ai",
+    siteName: "DocuSync AI",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DocuSync AI — Enterprise Contract Intelligence",
+    description:
+      "Turn 50+ page commercial contracts into actionable risk intelligence in seconds.",
+  },
 };
 
 export default function RootLayout({

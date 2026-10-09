@@ -83,21 +83,29 @@ export function InteractiveSandbox() {
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(100);
   const [hasScanned, setHasScanned] = useState<boolean>(true);
+  const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   const selectedContract =
     sampleContracts.find((c) => c.id === selectedId) || sampleContracts[0];
 
   const handleRunAudit = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
     setIsScanning(true);
     setProgress(0);
     setHasScanned(false);
 
     let current = 0;
-    const interval = setInterval(() => {
+    timerRef.current = setInterval(() => {
       current += 25;
       setProgress(current);
       if (current >= 100) {
-        clearInterval(interval);
+        if (timerRef.current) clearInterval(timerRef.current);
         setIsScanning(false);
         setHasScanned(true);
       }
