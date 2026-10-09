@@ -103,6 +103,7 @@ export function Features() {
             return (
               <Card
                 key={feature.title}
+                id={feature.title.includes("Security") ? "security" : undefined}
                 className="group relative bg-[#0D121F]/90 border-slate-800/80 hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-950/20 flex flex-col justify-between overflow-hidden"
               >
                 {/* Subtle card glow overlay on hover */}
