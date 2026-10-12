@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, CheckCircle2, Sparkles, Lock, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export function CTA() {
   const [email, setEmail] = useState("");
@@ -17,88 +14,115 @@ export function CTA() {
   };
 
   return (
-    <section id="trial" className="py-24 bg-[#090D16] relative overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-600/20 via-cyan-500/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+    <section
+      id="trial"
+      className="py-24 bg-[#141413] text-[#F6F4EE] border-t border-[#DCD8CE]"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="border border-[#DCD8CE]/25 bg-[#181715]">
+          {/* Top Ledger Bar */}
+          <div className="border-b border-[#DCD8CE]/20 px-6 sm:px-10 py-3.5 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-[#6E6A63]">
+            <span>
+              SECTION 06 // EDITORIAL DISPATCH &amp; SANDBOX PROVISIONING
+            </span>
+            <span className="text-[#2D5A3C]">
+              [✓] SLA: ZERO DATA RETENTION // ENCLAVE READY
+            </span>
+          </div>
 
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Double-Bezel Shell */}
-        <div className="p-2 sm:p-2.5 rounded-[2.5rem] bg-gradient-to-b from-white/[0.1] via-white/[0.04] to-transparent border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.15)]">
-          <div className="relative rounded-[calc(2.5rem-0.625rem)] border border-white/[0.04] bg-gradient-to-b from-[#10172A] to-[#080C16] p-8 sm:p-14 text-center overflow-hidden">
-            {/* Subtle grid pattern inside card */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
-
-            <div className="relative max-w-2xl mx-auto">
-              {/* Microscopic Eyebrow */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-indigo-300 text-[10px] font-mono uppercase tracking-[0.15em] mb-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-                <Sparkles className="size-3 text-cyan-400" />
-                <span>Zero Deployment Friction • 2 Minutes</span>
+          {/* 12-Column Asymmetric Dispatch Body */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#DCD8CE]/20">
+            {/* Left Column: Value Proposition */}
+            <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 flex flex-col justify-between">
+              <div>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#F6F4EE] leading-[1.1] mb-6">
+                  Accelerate Commercial Contract Audits by{" "}
+                  <span className="font-serif italic text-[#C84B31]">
+                    10.4x Today
+                  </span>
+                </h2>
+                <p className="text-sm sm:text-base text-[#6E6A63] leading-relaxed max-w-2xl mb-10">
+                  Deploy a private, deterministic contract audit workspace in
+                  under two minutes. Upload your corporate playbook and
+                  benchmark our AST citation engine against your most complex
+                  counterparty paper.
+                </p>
               </div>
 
-              {/* Headline */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-[-0.03em] leading-tight mb-4 text-balance">
-                Accelerate Your Contract Reviews by{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-200 to-indigo-200">
-                  10x Today
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#DCD8CE]/20 font-mono text-xs text-[#F6F4EE]">
+                <div>[✓] 14-Day Full Enclave Access</div>
+                <div>[✓] No Credit Card Required</div>
+                <div>§ Zero-Retention SLA Active</div>
+              </div>
+            </div>
+
+            {/* Right Column: Trial Dispatch Form */}
+            <div className="lg:col-span-5 p-8 sm:p-12 lg:p-14 flex flex-col justify-between bg-[#141413]">
+              <div>
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#C84B31] block mb-2">
+                  SANDBOX CREDENTIAL DISPATCH
                 </span>
-              </h2>
+                <h3 className="text-xl font-normal text-[#F6F4EE] mb-6">
+                  Provision Your Dedicated Trial Workspace
+                </h3>
 
-              {/* Subtext */}
-              <p className="text-slate-300/90 text-sm sm:text-base leading-relaxed mb-8">
-                Join leading legal operations and deal-desk teams eliminating contract review bottlenecks with zero-hallucination AI.
+                {submitted ? (
+                  <div className="border border-[#2D5A3C] bg-[#181715] p-6">
+                    <div className="font-mono text-xs uppercase tracking-wider text-[#2D5A3C] mb-2">
+                      [✓] DISPATCH CONFIRMED // ENCLAVE INITIALIZED
+                    </div>
+                    <p className="text-sm text-[#F6F4EE] leading-relaxed mb-4">
+                      Sandbox credentials and single-tenant access keys have
+                      been dispatched to{" "}
+                      <span className="font-mono underline">{email}</span>.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setEmail("");
+                      }}
+                      className="font-mono text-xs uppercase tracking-wider text-[#C84B31] hover:underline cursor-pointer"
+                    >
+                      → Register Another Corporate Address
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label
+                        htmlFor="corporate-email"
+                        className="block font-mono text-[11px] uppercase tracking-wider text-[#6E6A63] mb-2"
+                      >
+                        Corporate Counsel Email Address
+                      </label>
+                      <input
+                        id="corporate-email"
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="counsel@enterprise-legal.com"
+                        className="w-full h-12 px-4 bg-[#181715] border border-[#DCD8CE]/35 text-[#F6F4EE] placeholder:text-[#6E6A63] font-mono text-xs sm:text-sm focus:outline-none focus:border-[#C84B31] transition-colors"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full h-12 bg-[#C84B31] hover:bg-[#F6F4EE] text-[#F6F4EE] hover:text-[#141413] font-mono text-xs uppercase tracking-[0.15em] transition-colors flex items-center justify-between px-5 cursor-pointer"
+                    >
+                      <span>Start 14-Day Free Trial</span>
+                      <span>→</span>
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              <p className="font-mono text-[11px] text-[#6E6A63] pt-6 border-t border-[#DCD8CE]/15 mt-8">
+                ENCRYPTED TLS 1.3 // SOC 2 TYPE II ATTESTED // NO MODEL TRAINING
               </p>
-
-              {/* Form */}
-              {submitted ? (
-                <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 text-sm flex items-center justify-center gap-2 max-w-md mx-auto">
-                  <CheckCircle2 className="size-5 text-emerald-400" />
-                  <span>
-                    Welcome aboard! Check <strong>{email}</strong> for your sandbox access link.
-                  </span>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto mb-6"
-                >
-                  <Input
-                    type="email"
-                    placeholder="Enter your corporate email..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="h-11 bg-slate-950/80 border-white/[0.1] text-white placeholder:text-slate-500 text-xs sm:text-sm px-4 rounded-full focus-visible:ring-indigo-500 shadow-inner"
-                  />
-                  <button
-                    type="submit"
-                    className="group w-full sm:w-auto h-11 pl-5 pr-1.5 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-white shadow-[0_8px_24px_rgba(99,102,241,0.35),inset_0_1px_1px_rgba(255,255,255,0.25)] border border-white/20 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] inline-flex items-center justify-center gap-2.5 shrink-0"
-                  >
-                    <span>Start 14-Day Free Trial</span>
-                    <span className="size-8 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                      <ArrowRight className="size-3.5" />
-                    </span>
-                  </button>
-                </form>
-              )}
-
-            {/* Guarantees */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-400">
-              <span className="flex items-center gap-1.5 text-slate-300">
-                <CheckCircle2 className="size-3.5 text-emerald-400" />
-                No credit card required
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-300">
-                <CheckCircle2 className="size-3.5 text-emerald-400" />
-                14-day full platform access
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-300">
-                <Lock className="size-3.5 text-cyan-400" />
-                Zero data retention SLA
-              </span>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );

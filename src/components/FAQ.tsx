@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle, ShieldCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 interface FAQItem {
+  code: string;
   question: string;
   answer: string;
 }
@@ -14,34 +13,40 @@ export function FAQ() {
 
   const faqs: FAQItem[] = [
     {
+      code: "01",
       question: "How does DocuSync AI guarantee zero hallucinations?",
       answer:
-        "DocuSync AI relies on deterministic grounded extraction rather than generative guessing. Every single flagged risk, liability score, and suggested redline is mathematically tied to exact verbatim line and page numbers in your source contract. If an assertion cannot be cited with 100% confidence, the engine marks it as 'Uncertain — Human Review Required' instead of guessing.",
+        "DocuSync AI relies on deterministic grounded extraction rather than generative guessing. Every single flagged risk, liability score, and suggested redline is mathematically tied to exact verbatim line and page numbers in your source contract. If an assertion cannot be cited with 100% confidence, the engine marks it as 'Uncertain : Human Review Required' instead of guessing.",
     },
     {
+      code: "02",
       question: "Is our company contract data used to train AI models?",
       answer:
         "Never. Under our enterprise Service Level Agreement (SLA), customer data is protected by strict Zero Data Retention (ZDR). Your documents, playbooks, and redlines are processed in transient, isolated memory environments and never stored, logged, or utilized to train proprietary, open-source, or third-party foundational models.",
     },
     {
+      code: "03",
       question: "How does playbook customization work for our company guidelines?",
       answer:
-        "You can upload your existing standard contract templates, negotiation fallback matrices, or standard playbook guidelines (PDF, DOCX, or markdown). DocuSync AI parses your acceptable risk boundaries (e.g. 'Never accept uncapped indemnity', 'Payment terms must be Net 45 or shorter') and grades counterparty contracts directly against those standards.",
+        "You can upload your existing standard contract templates, negotiation fallback matrices, or standard playbook guidelines (PDF, DOCX, or Markdown). DocuSync AI compiles your acceptable risk boundaries (for example: 'Never accept uncapped indemnity' or 'Payment terms must be Net 45 or shorter') into deterministic AST rules and grades counterparty contracts directly against those standards.",
     },
     {
+      code: "04",
       question: "Can DocuSync AI integrate with our existing CLM (Ironclad, Agiloft, etc.)?",
       answer:
-        "Yes. We support pre-built bi-directional connectors for Ironclad, Salesforce, DocuSign CLM, Agiloft, and Slack. You can configure DocuSync AI to automatically trigger upon receiving new counterparty paper in your CLM, run the audit, and post redlines directly into the contract record.",
+        "Yes. We support pre-built bi-directional connectors for Ironclad, Salesforce, DocuSign CLM, Agiloft, and Slack. You can configure DocuSync AI to automatically trigger upon receiving new counterparty paper in your CLM, execute the playbook audit, and post native DOCX track-change redlines directly into the contract record.",
     },
     {
+      code: "05",
       question: "What file formats and length limits are supported?",
       answer:
-        "We support native PDF, scanned PDFs (with OCR), Microsoft Word (.docx), and Rich Text (.rtf). Because our models utilize 1M+ token context windows, there are virtually no page limits—we routinely parse 100+ page government solicitations, cross-border master agreements, and complex syndicated credit agreements.",
+        "We support native PDF, scanned PDFs (with optical layout recovery), Microsoft Word (.docx), and Rich Text (.rtf). Because our parser builds a hierarchical document tree across 1M+ token context windows, there are virtually no page limits: we routinely parse 150+ page government solicitations, cross-border master agreements, and complex syndicated credit agreements.",
     },
     {
+      code: "06",
       question: "What certifications and security compliance standards do you maintain?",
       answer:
-        "DocuSync AI is SOC 2 Type II certified, ISO 27001 compliant, and fully aligned with GDPR and HIPAA guidelines. All document transmissions utilize TLS 1.3 in transit and AES-256 at rest, with optional dedicated VPC single-tenant hosting for enterprise tiers.",
+        "DocuSync AI is SOC 2 Type II certified, ISO 27001 compliant, and fully aligned with GDPR Article 28 and HIPAA safeguards. All document transmissions utilize TLS 1.3 in transit and AES-256 in ephemeral memory, with optional dedicated single-tenant VPC deployment for enterprise legal teams.",
     },
   ];
 
@@ -50,84 +55,91 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-24 bg-[#0B0F19] relative border-t border-slate-800/80">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <Badge
-            variant="outline"
-            className="border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-xs px-3 py-1 mb-3"
-          >
-            Got Questions?
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Everything legal and security teams need to know about DocuSync AI.
-          </p>
-        </div>
+    <section
+      id="faq"
+      className="py-24 bg-[#F6F4EE] text-[#141413] border-t border-[#DCD8CE]"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Section Header & Technical Contact Box */}
+          <div className="lg:col-span-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#C84B31] block mb-3">
+              SECTION 05 // TECHNICAL SPECIFICATION FAQ
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-[#141413] leading-[1.15] mb-4">
+              Architecture, Security &amp;{" "}
+              <span className="font-serif italic text-[#C84B31]">
+                Verification Protocols
+              </span>
+            </h2>
+            <p className="text-sm text-[#6E6A63] leading-relaxed mb-8">
+              Direct technical responses for General Counsel, Chief Information
+              Security Officers, and Legal Operations engineers evaluating
+              deterministic contract verification.
+            </p>
 
-        {/* Custom Accordion for Dark Mode Elegance */}
-        <div className="space-y-3.5">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={index}
-                className={`rounded-xl border transition-all ${
-                  isOpen
-                    ? "bg-[#0E1524] border-indigo-500/50 shadow-lg shadow-indigo-950/20"
-                    : "bg-[#090D16] border-slate-800/80 hover:border-slate-700"
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggle(index)}
-                  className="w-full flex items-center justify-between p-5 text-left transition-colors"
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-sm sm:text-base font-semibold text-white pr-4">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={`size-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-cyan-400" : ""
-                    }`}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/40">
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Security Reassurance Callout */}
-        <div className="mt-12 p-6 rounded-2xl bg-slate-900/40 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div className="flex items-center gap-3">
-            <div className="size-10 rounded-xl bg-cyan-950/60 border border-cyan-800/50 flex items-center justify-center shrink-0">
-              <ShieldCheck className="size-5 text-cyan-400" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">
-                Have specific InfoSec or compliance requirements?
-              </h4>
-              <p className="text-xs text-slate-400">
-                Our legal engineering team will provide our complete SOC 2 report and architecture review.
+            {/* Technical Contact Box */}
+            <div className="border border-[#DCD8CE] bg-[#EFECE4] p-6">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#2D5A3C] block mb-2">
+                [✓] INFOSEC &amp; ARCHITECTURE REVIEW
+              </span>
+              <h3 className="text-base font-medium text-[#141413] mb-2">
+                Require a full SOC 2 Type II packet or custom DPA?
+              </h3>
+              <p className="text-xs text-[#6E6A63] leading-relaxed mb-5">
+                Our security engineering team provides complete penetration test
+                summaries, enclave topology diagrams, and zero-retention
+                attestations.
               </p>
+              <a
+                href="mailto:security@docusync.ai"
+                className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#141413] border-b border-[#141413] pb-0.5 hover:text-[#C84B31] hover:border-[#C84B31] transition-colors"
+              >
+                <span>Request Security Dossier</span>
+                <span>→</span>
+              </a>
             </div>
           </div>
-          <a
-            href="mailto:security@docusync.ai"
-            className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 underline underline-offset-4 shrink-0"
-          >
-            Request Security Packet →
-          </a>
+
+          {/* Right Column: Accordion Specification Ledger */}
+          <div className="lg:col-span-8 border-t border-[#DCD8CE] divide-y divide-[#DCD8CE]">
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div
+                  key={faq.code}
+                  className={`transition-colors ${
+                    isOpen ? "bg-[#EFECE4]/70" : "bg-transparent"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggle(index)}
+                    className="w-full flex items-start justify-between gap-4 py-6 px-4 sm:px-6 text-left cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
+                    <div className="flex items-baseline gap-4 pr-4">
+                      <span className="font-mono text-xs text-[#C84B31] shrink-0">
+                        § {faq.code}
+                      </span>
+                      <span className="text-base sm:text-lg font-medium text-[#141413]">
+                        {faq.question}
+                      </span>
+                    </div>
+                    <span className="font-mono text-lg text-[#141413] shrink-0 leading-none select-none">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 sm:px-6 pb-6 pl-12 sm:pl-16 text-sm text-[#6E6A63] leading-relaxed">
+                      <p>{faq.answer}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
