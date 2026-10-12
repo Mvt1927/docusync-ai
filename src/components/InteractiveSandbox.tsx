@@ -1,80 +1,158 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  FileText,
-  Play,
-  CheckCircle2,
-  AlertTriangle,
-  ShieldAlert,
-  Sparkles,
-  RefreshCw,
-  Download,
-  Check,
-  Cpu,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
+interface ClauseAuditItem {
+  clauseRef: string;
+  title: string;
+  badge: "[FLAGGED : HIGH RISK]" | "[VERIFIED : COMPLIANT]";
+  isFlagged: boolean;
+  extractedText: string;
+  ruleCitation: string;
+  proposedRedline: string;
+}
 
 interface SampleContract {
   id: string;
-  name: string;
-  type: string;
+  selectorLabel: string;
+  fileName: string;
+  documentCode: string;
   pages: number;
+  totalClauses: number;
   riskScore: number;
-  status: "High Risk" | "Low Risk" | "Compliant";
-  statusColor: string;
-  flaggedClauses: number;
-  highlightedIssue: string;
-  proposedRedline: string;
-  playbookStatus: string;
+  overallStatus: "[FLAGGED : HIGH RISK]" | "[VERIFIED : COMPLIANT]";
+  isHighRisk: boolean;
+  flaggedCount: number;
+  latency: string;
+  playbookRuleSummary: string;
+  counterparty: string;
+  governingLaw: string;
+  clauses: ClauseAuditItem[];
 }
 
 const sampleContracts: SampleContract[] = [
   {
     id: "msa",
-    name: "Enterprise_Cloud_MSA_2026.pdf",
-    type: "Master Services Agreement",
+    selectorLabel: "Master Services Agreement (MSA)",
+    fileName: "Enterprise_Cloud_MSA_2026.pdf",
+    documentCode: "DOC_ID // MSA-2026-094",
     pages: 58,
+    totalClauses: 136,
     riskScore: 84,
-    status: "High Risk",
-    statusColor: "text-rose-400 bg-rose-950/50 border-rose-800/60",
-    flaggedClauses: 4,
-    highlightedIssue:
-      "Section 12.3: Unilateral right to alter service levels without fee adjustment or termination remedy.",
-    proposedRedline:
-      "Add mutual consent requirement and 30-day notice for material SLA alterations with pro-rata refund remedy.",
-    playbookStatus: "Violates Playbook Rule 5.2 (SLA Degradation Protections)",
+    overallStatus: "[FLAGGED : HIGH RISK]",
+    isHighRisk: true,
+    flaggedCount: 4,
+    latency: "1.18s",
+    playbookRuleSummary:
+      "Violates Playbook Rule 5.2 (Unilateral SLA Modification) & Rule 8.4 (Uncapped IP Indemnity).",
+    counterparty: "Northstar Cloud Infrastructure Corp.",
+    governingLaw: "State of New York, US",
+    clauses: [
+      {
+        clauseRef: "§ 12.3 // SERVICE LEVEL MODIFICATIONS (PAGE 29)",
+        title: "Unilateral Right to Degrade SLA Thresholds",
+        badge: "[FLAGGED : HIGH RISK]",
+        isFlagged: true,
+        extractedText:
+          "Provider reserves the sole and unilateral right to modify, suspend, or revise Service Level Availability targets at any time upon posting notice to the customer portal without fee adjustment.",
+        ruleCitation: "VIOLATES PLAYBOOK RULE 5.2 // SLA DEGRADATION REMEDY",
+        proposedRedline:
+          "- upon posting notice to the customer portal without fee adjustment.\n+ only upon mutual written consent of both Parties; provided that any material SLA reduction grants Customer a thirty (30) day termination right with pro-rata refund of prepaid fees.",
+      },
+      {
+        clauseRef: "§ 16.1 // GOVERNING LAW & VENUE (PAGE 44)",
+        title: "Commercial Venue & Dispute Resolution",
+        badge: "[VERIFIED : COMPLIANT]",
+        isFlagged: false,
+        extractedText:
+          "This Agreement shall be governed by and construed in accordance with the laws of the State of New York, without regard to conflict of law principles.",
+        ruleCitation: "MATCHES PLAYBOOK RULE 1.1 // APPROVED US COMMERCIAL VENUE",
+        proposedRedline:
+          "[✓] NO REDLINE REQUIRED: Clause conforms to institutional Tier-1 governing law baseline.",
+      },
+    ],
   },
   {
     id: "nda",
-    name: "Mutual_Confidentiality_NDA.docx",
-    type: "Non-Disclosure Agreement",
+    selectorLabel: "Mutual Non-Disclosure (NDA)",
+    fileName: "Mutual_Confidentiality_NDA.docx",
+    documentCode: "DOC_ID // NDA-2026-019",
     pages: 8,
-    riskScore: 28,
-    status: "Low Risk",
-    statusColor: "text-emerald-400 bg-emerald-950/50 border-emerald-800/60",
-    flaggedClauses: 1,
-    highlightedIssue:
-      "Section 4.1: Perpetual trade secret survival period with standard 3-year term for general confidential information.",
-    proposedRedline:
-      "Standard clause aligned with AmLaw standard. Minor language tweak to exclude residual knowledge.",
-    playbookStatus: "Playbook Approved (Minor optional edit)",
+    totalClauses: 24,
+    riskScore: 18,
+    overallStatus: "[VERIFIED : COMPLIANT]",
+    isHighRisk: false,
+    flaggedCount: 0,
+    latency: "0.42s",
+    playbookRuleSummary:
+      "Conforms to Standard Mutual Confidentiality Playbook v4.2. Trade secret survival & residual knowledge carve-outs verified.",
+    counterparty: "Meridian Quantitative Partners LLC",
+    governingLaw: "State of Delaware, US",
+    clauses: [
+      {
+        clauseRef: "§ 4.1 // CONFIDENTIALITY SURVIVAL PERIOD (PAGE 3)",
+        title: "Three-Year Standard Term with Trade Secret Carve-Out",
+        badge: "[VERIFIED : COMPLIANT]",
+        isFlagged: false,
+        extractedText:
+          "Confidentiality obligations under this Agreement shall remain in effect for three (3) years from disclosure, except with respect to Trade Secrets, which shall remain protected for so long as they qualify under applicable law.",
+        ruleCitation: "MATCHES PLAYBOOK RULE 2.4 // SURVIVAL HORIZON",
+        proposedRedline:
+          "[✓] NO REDLINE REQUIRED: Survival duration aligns with standard 36-month corporate threshold.",
+      },
+      {
+        clauseRef: "§ 6.2 // COMPELLED DISCLOSURE NOTICE (PAGE 5)",
+        title: "Prior Written Notice for Regulatory Subpoenas",
+        badge: "[VERIFIED : COMPLIANT]",
+        isFlagged: false,
+        extractedText:
+          "Receiving Party shall provide prompt prior written notice to Disclosing Party to permit Disclosing Party to seek a protective order prior to any compelled disclosure.",
+        ruleCitation: "MATCHES PLAYBOOK RULE 3.1 // SUBPOENA SAFEGUARD",
+        proposedRedline:
+          "[✓] NO REDLINE REQUIRED: Prior notice and cooperation obligations verified.",
+      },
+    ],
   },
   {
     id: "dpa",
-    name: "GDPR_Standard_DPA_Schedule.pdf",
-    type: "Data Processing Addendum",
+    selectorLabel: "Data Processing Addendum (DPA)",
+    fileName: "GDPR_Standard_DPA_Schedule.pdf",
+    documentCode: "DOC_ID // DPA-2026-307",
     pages: 24,
-    riskScore: 68,
-    status: "High Risk",
-    statusColor: "text-amber-400 bg-amber-950/50 border-amber-800/60",
-    flaggedClauses: 2,
-    highlightedIssue:
-      "Section 7.2: Subprocessor notification window is only 5 business days instead of the required 30-day objection window.",
-    proposedRedline:
-      "Extend subprocessor notification to minimum 30 days prior notice with formal right to terminate without penalty.",
-    playbookStatus: "Violates GDPR Compliance Standard & Playbook Rule 9.1",
+    totalClauses: 68,
+    riskScore: 72,
+    overallStatus: "[FLAGGED : HIGH RISK]",
+    isHighRisk: true,
+    flaggedCount: 2,
+    latency: "0.79s",
+    playbookRuleSummary:
+      "Violates Playbook Rule 9.1 (Subprocessor Objection Window) & GDPR Article 28 Breach Notification Timeline.",
+    counterparty: "Euclid Telemetry Systems GmbH",
+    governingLaw: "Republic of Ireland / EU GDPR",
+    clauses: [
+      {
+        clauseRef: "§ 7.2 // SUBPROCESSOR AUTHORIZATION (PAGE 11)",
+        title: "Insufficient Prior Notice Window for New Subprocessors",
+        badge: "[FLAGGED : HIGH RISK]",
+        isFlagged: true,
+        extractedText:
+          "Processor shall notify Controller at least five (5) business days prior to authorizing any new Subprocessor to access Personal Data.",
+        ruleCitation: "VIOLATES PLAYBOOK RULE 9.1 // MINIMUM 30-DAY OBJECTION WINDOW",
+        proposedRedline:
+          "- at least five (5) business days prior to authorizing any new Subprocessor\n+ at least thirty (30) calendar days prior to authorizing any new Subprocessor, granting Controller the right to object in writing and terminate affected services without penalty.",
+      },
+      {
+        clauseRef: "§ 10.4 // CROSS-BORDER TRANSFER MECHANISM (PAGE 18)",
+        title: "EU Standard Contractual Clauses (Module Two)",
+        badge: "[VERIFIED : COMPLIANT]",
+        isFlagged: false,
+        extractedText:
+          "Transfers of Personal Data outside the EEA shall be governed by the 2021 European Commission Standard Contractual Clauses (Module Two: Controller to Processor).",
+        ruleCitation: "MATCHES PLAYBOOK RULE 9.6 // SCC TRANSFER VALIDATION",
+        proposedRedline:
+          "[✓] NO REDLINE REQUIRED: EU 2021 SCC Module Two incorporation verified.",
+      },
+    ],
   },
 ];
 
@@ -83,6 +161,7 @@ export function InteractiveSandbox() {
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(100);
   const [hasScanned, setHasScanned] = useState<boolean>(true);
+  const [exportMessage, setExportMessage] = useState<string | null>(null);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
@@ -96,6 +175,7 @@ export function InteractiveSandbox() {
 
   const handleRunAudit = () => {
     if (timerRef.current) clearInterval(timerRef.current);
+    setExportMessage(null);
     setIsScanning(true);
     setProgress(0);
     setHasScanned(false);
@@ -109,197 +189,307 @@ export function InteractiveSandbox() {
         setIsScanning(false);
         setHasScanned(true);
       }
-    }, 200);
+    }, 180);
+  };
+
+  const handleSelectContract = (id: string) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setIsScanning(false);
+    setProgress(100);
+    setSelectedId(id);
+    setHasScanned(true);
+    setExportMessage(null);
   };
 
   return (
-    <section id="sandbox" className="py-24 bg-[#0B0F19] relative border-t border-slate-800/80">
+    <section
+      id="sandbox"
+      className="py-24 sm:py-32 bg-[#EFECE4] text-[#141413] border-b border-[#DCD8CE]"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge
-            variant="outline"
-            className="border-indigo-500/30 bg-indigo-950/40 text-indigo-300 text-xs px-3 py-1 mb-3"
-          >
-            Live Sandbox
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
-            Test Drive DocuSync AI in Real-Time
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Select a commercial contract sample and trigger our deterministic analysis engine. No sign-up required.
-          </p>
-        </div>
-
-        {/* Sandbox Console Double-Bezel Container */}
-        <div className="max-w-5xl mx-auto p-2 sm:p-2.5 rounded-[2.2rem] bg-gradient-to-b from-white/[0.08] via-white/[0.03] to-transparent border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)]">
-          <div className="rounded-[calc(2.2rem-0.625rem)] border border-white/[0.04] bg-[#090D17] shadow-2xl p-6 sm:p-8">
-          {/* Top Contract Selectors */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800">
-            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-              <span className="text-xs font-semibold text-slate-400 mr-2">
-                Sample Document:
-              </span>
-              {sampleContracts.map((contract) => (
-                <button
-                  key={contract.id}
-                  onClick={() => {
-                    setSelectedId(contract.id);
-                    setHasScanned(true);
-                  }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                    selectedId === contract.id
-                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                      : "bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800"
-                  }`}
-                >
-                  {contract.type}
-                </button>
-              ))}
+        {/* Asymmetric 12-Column Editorial Header on #EFECE4 */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 mb-10 border-b border-[#DCD8CE] items-end">
+          <div className="lg:col-span-7">
+            <div className="font-mono text-xs uppercase tracking-widest text-[#C84B31] mb-4">
+              SECTION 03 // INTERACTIVE AUDIT TERMINAL
             </div>
-
-            <Button
-              onClick={handleRunAudit}
-              disabled={isScanning}
-              className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white text-xs font-semibold h-9 px-4"
-            >
-              {isScanning ? (
-                <>
-                  <RefreshCw className="size-3.5 mr-2 animate-spin" />
-                  Running Neural Audit... {progress}%
-                </>
-              ) : (
-                <>
-                  <Play className="size-3.5 mr-2 fill-current" />
-                  Run AI Audit
-                </>
-              )}
-            </Button>
+            <h2 className="font-normal text-3xl sm:text-5xl text-[#141413] tracking-tight leading-[1.12]">
+              Inspect deterministic clause verification{" "}
+              <span className="font-serif italic font-normal">
+                in real time.
+              </span>
+            </h2>
           </div>
 
-          {/* Progress Bar (when scanning) */}
+          <div className="lg:col-span-5 flex flex-col justify-between">
+            <p className="text-sm sm:text-base text-[#6E6A63] leading-relaxed mb-4">
+              Select a commercial instrument below and execute our deterministic
+              audit engine to inspect extracted risk exposures and native OpenXML
+              redline patches.
+            </p>
+            <div className="font-mono text-xs text-[#141413] bg-[#F6F4EE] border border-[#DCD8CE] px-3.5 py-2 flex items-center justify-between">
+              <span>ENCLAVE: SANDBOX_NODE_04</span>
+              <span className="text-[#2D5A3C]">[✓] PLAYBOOK V4.2 LOADED</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Editorial Legal Terminal Container */}
+        <div className="border border-[#DCD8CE] bg-[#F6F4EE]">
+          {/* Top Control Bar: Sample Selectors & Execute Action */}
+          <div className="p-4 sm:p-6 bg-[#F6F4EE] border-b border-[#DCD8CE] flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#6E6A63] mr-2">
+                INSTRUMENT SAMPLE:
+              </span>
+              {sampleContracts.map((contract) => {
+                const isSelected = selectedId === contract.id;
+                return (
+                  <button
+                    key={contract.id}
+                    type="button"
+                    onClick={() => handleSelectContract(contract.id)}
+                    className={`px-3.5 py-2 font-mono text-xs border transition-colors ${
+                      isSelected
+                        ? "bg-[#181715] text-[#F6F4EE] border-[#181715]"
+                        : "bg-[#EFECE4] text-[#141413] border-[#DCD8CE] hover:border-[#141413]"
+                    }`}
+                  >
+                    {contract.selectorLabel}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleRunAudit}
+              disabled={isScanning}
+              className="px-5 py-2.5 bg-[#C84B31] text-[#F6F4EE] font-mono text-xs uppercase tracking-wider hover:bg-[#C84B31]/90 transition-colors disabled:opacity-60 shrink-0"
+            >
+              {isScanning
+                ? `Executing AST Audit... ${progress}%`
+                : "Execute Deterministic Audit →"}
+            </button>
+          </div>
+
+          {/* Scanning Progress Bar */}
           {isScanning && (
-            <div className="w-full bg-slate-900 rounded-full h-1.5 mb-6 overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-indigo-500 to-cyan-400 h-1.5 transition-all duration-200"
-                style={{ width: `${progress}%` }}
-              />
+            <div className="p-6 bg-[#181715] text-[#F6F4EE] border-b border-[#DCD8CE] font-mono text-xs">
+              <div className="flex items-center justify-between mb-2">
+                <span>
+                  PARSING AST NODES // {selectedContract.fileName} (
+                  {selectedContract.pages} PAGES)
+                </span>
+                <span className="text-[#C84B31]">{progress}%</span>
+              </div>
+              <div className="w-full bg-[#2E2C29] h-1.5 overflow-hidden">
+                <div
+                  className="bg-[#C84B31] h-1.5 transition-all duration-150"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
             </div>
           )}
 
-          {/* Audit Results Dashboard */}
+          {/* Two-Pane Workbench: Left (#F6F4EE) & Right (#181715) */}
           {hasScanned && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* Left Column: Contract Specs */}
-              <div className="lg:col-span-5 bg-slate-950/60 rounded-xl border border-slate-800/80 p-5 flex flex-col justify-between">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              {/* Left Workbench Pane (5 cols): Source Instrument Dossier */}
+              <div className="lg:col-span-5 bg-[#F6F4EE] text-[#141413] p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-[#DCD8CE] flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <FileText className="size-4 text-indigo-400" />
-                    <span className="font-mono text-xs font-semibold text-white">
-                      {selectedContract.name}
+                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#DCD8CE] font-mono text-xs">
+                    <span className="text-[#6E6A63]">
+                      {selectedContract.documentCode}
+                    </span>
+                    <span
+                      className={`px-2 py-0.5 font-medium ${
+                        selectedContract.isHighRisk
+                          ? "bg-[#C84B31]/10 text-[#C84B31] border border-[#C84B31]"
+                          : "bg-[#2D5A3C]/10 text-[#2D5A3C] border border-[#2D5A3C]"
+                      }`}
+                    >
+                      {selectedContract.overallStatus}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
-                    <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
-                      <span className="text-[10px] text-slate-400 block mb-0.5">
-                        Length
+                  <div className="mb-6">
+                    <div className="font-mono text-xs text-[#6E6A63] mb-1">
+                      SOURCE INSTRUMENT FILE
+                    </div>
+                    <h3 className="font-normal text-xl text-[#141413] font-mono break-all">
+                      {selectedContract.fileName}
+                    </h3>
+                  </div>
+
+                  {/* Metadata Grid */}
+                  <div className="grid grid-cols-2 border-t border-l border-[#DCD8CE] mb-6 font-mono text-xs">
+                    <div className="p-3.5 border-r border-b border-[#DCD8CE] bg-[#EFECE4]/60">
+                      <span className="text-[10px] text-[#6E6A63] block mb-1">
+                        DOCUMENT LENGTH
                       </span>
-                      <span className="font-mono font-bold text-slate-200">
-                        {selectedContract.pages} pages
+                      <span className="text-sm text-[#141413] font-medium">
+                        {selectedContract.pages} Pages /{" "}
+                        {selectedContract.totalClauses} Clauses
                       </span>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
-                      <span className="text-[10px] text-slate-400 block mb-0.5">
-                        Flagged Clauses
+                    <div className="p-3.5 border-r border-b border-[#DCD8CE] bg-[#EFECE4]/60">
+                      <span className="text-[10px] text-[#6E6A63] block mb-1">
+                        FLAGGED DEVIATIONS
                       </span>
-                      <span className="font-mono font-bold text-rose-400">
-                        {selectedContract.flaggedClauses} detected
+                      <span
+                        className={`text-sm font-medium ${
+                          selectedContract.flaggedCount > 0
+                            ? "text-[#C84B31]"
+                            : "text-[#2D5A3C]"
+                        }`}
+                      >
+                        {selectedContract.flaggedCount} Clauses Flagged
+                      </span>
+                    </div>
+                    <div className="p-3.5 border-r border-b border-[#DCD8CE] bg-[#EFECE4]/60">
+                      <span className="text-[10px] text-[#6E6A63] block mb-1">
+                        COUNTERPARTY PAPER
+                      </span>
+                      <span className="text-xs text-[#141413]">
+                        {selectedContract.counterparty}
+                      </span>
+                    </div>
+                    <div className="p-3.5 border-r border-b border-[#DCD8CE] bg-[#EFECE4]/60">
+                      <span className="text-[10px] text-[#6E6A63] block mb-1">
+                        GOVERNING VENUE
+                      </span>
+                      <span className="text-xs text-[#141413]">
+                        {selectedContract.governingLaw}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 text-xs">
-                    <span className="text-[10px] uppercase font-bold text-indigo-400 tracking-wider block mb-1">
-                      Playbook Alignment
-                    </span>
-                    <p className="text-slate-300 text-xs leading-relaxed">
-                      {selectedContract.playbookStatus}
+                  {/* Playbook Alignment Box */}
+                  <div className="p-4 bg-[#EFECE4] border border-[#DCD8CE] mb-6">
+                    <div className="font-mono text-[11px] uppercase tracking-wider text-[#C84B31] mb-1.5">
+                      § PLAYBOOK ALIGNMENT SUMMARY
+                    </div>
+                    <p className="text-xs sm:text-sm text-[#141413] leading-relaxed">
+                      {selectedContract.playbookRuleSummary}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                  <span className="flex items-center gap-1.5">
-                    <Cpu className="size-3.5 text-cyan-400" />
-                    Latency: 1.18s
-                  </span>
-                  <span className="text-emerald-400 font-mono text-[11px]">
-                    100% Deterministic
-                  </span>
+                {/* Telemetry Footer */}
+                <div className="pt-4 border-t border-[#DCD8CE] flex items-center justify-between font-mono text-xs text-[#6E6A63]">
+                  <span>EXECUTION LATENCY: {selectedContract.latency}</span>
+                  <span className="text-[#2D5A3C]">[✓] 100% DETERMINISTIC</span>
                 </div>
               </div>
 
-              {/* Right Column: AI Risk Intelligence Report */}
-              <div className="lg:col-span-7 bg-[#090D16] rounded-xl border border-slate-800 p-5 flex flex-col justify-between">
+              {/* Right Workbench Pane (7 cols): Dark Legal Terminal Output */}
+              <div className="lg:col-span-7 bg-[#181715] text-[#F6F4EE] p-6 sm:p-8 font-mono flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-4">
+                  {/* Terminal Header & Liability Index */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-[#2E2C29]">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                        Calculated Liability Rating
+                      <span className="text-[11px] uppercase tracking-wider text-[#6E6A63] block mb-1">
+                        CALCULATED LIABILITY EXPOSURE INDEX
                       </span>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-2xl font-black font-mono text-white">
-                          Score: {selectedContract.riskScore}
-                          <span className="text-xs text-slate-400 font-normal">/100</span>
-                        </span>
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${selectedContract.statusColor}`}
-                        >
-                          {selectedContract.status}
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-2xl sm:text-3xl text-[#F6F4EE] font-normal">
+                          INDEX: {selectedContract.riskScore}
+                          <span className="text-sm text-[#6E6A63]">/100</span>
                         </span>
                       </div>
                     </div>
+
+                    <div
+                      className={`px-3 py-1.5 text-xs border ${
+                        selectedContract.isHighRisk
+                          ? "border-[#C84B31] text-[#C84B31] bg-[#141413]"
+                          : "border-[#2D5A3C] text-[#2D5A3C] bg-[#141413]"
+                      }`}
+                    >
+                      {selectedContract.overallStatus}
+                    </div>
                   </div>
 
-                  {/* Highlighted Risk Issue */}
-                  <div className="mb-4">
-                    <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 mb-1.5">
-                      <AlertTriangle className="size-3.5 text-amber-400" />
-                      Critical Red Flag Detected
-                    </span>
-                    <p className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300 font-mono leading-relaxed">
-                      {selectedContract.highlightedIssue}
-                    </p>
-                  </div>
+                  {/* Clause-by-Clause Verification Ledger */}
+                  <div className="space-y-6">
+                    {selectedContract.clauses.map((clause, index) => (
+                      <div
+                        key={index}
+                        className="border border-[#2E2C29] bg-[#141413] p-4 sm:p-5"
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#2E2C29] text-xs">
+                          <span className="text-[#F6F4EE]">
+                            {clause.clauseRef}
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 ${
+                              clause.isFlagged
+                                ? "text-[#C84B31] border border-[#C84B31]"
+                                : "text-[#2D5A3C] border border-[#2D5A3C]"
+                            }`}
+                          >
+                            {clause.badge}
+                          </span>
+                        </div>
 
-                  {/* Proposed Redline */}
-                  <div>
-                    <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 mb-1.5">
-                      <Sparkles className="size-3.5 text-cyan-400" />
-                      Suggested Redline Counter-Proposal
-                    </span>
-                    <p className="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-xs text-emerald-300 leading-relaxed">
-                      {selectedContract.proposedRedline}
-                    </p>
+                        <h4 className="font-sans font-normal text-base text-[#F6F4EE] mb-2">
+                          {clause.title}
+                        </h4>
+
+                        <div className="mb-3">
+                          <div className="text-[10px] text-[#6E6A63] uppercase mb-1">
+                            EXTRACTED COUNTERPARTY CLAUSE:
+                          </div>
+                          <p className="text-xs text-[#6E6A63] leading-relaxed bg-[#181715] p-3 border border-[#2E2C29]">
+                            &ldquo;{clause.extractedText}&rdquo;
+                          </p>
+                        </div>
+
+                        <div className="text-[11px] text-[#C84B31] mb-2">
+                          → {clause.ruleCitation}
+                        </div>
+
+                        <div>
+                          <div className="text-[10px] text-[#2D5A3C] uppercase mb-1">
+                            PROPOSED REDLINE COUNTER-PROPOSAL:
+                          </div>
+                          <pre className="text-xs text-[#F6F4EE] bg-[#181715] p-3 border border-[#2E2C29] overflow-x-auto whitespace-pre-wrap leading-relaxed">
+                            <code>{clause.proposedRedline}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-end gap-3">
-                  <Button
-                    size="sm"
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs h-8"
-                    onClick={() => alert(`Exporting ${selectedContract.name} summary audit report!`)}
+                {/* Terminal Action Bar */}
+                <div className="pt-5 mt-6 border-t border-[#2E2C29] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+                  <div className="text-[#6E6A63]">
+                    {exportMessage ? (
+                      <span className="text-[#2D5A3C]">{exportMessage}</span>
+                    ) : (
+                      <span>
+                        OUTPUT FORMAT: ECMA-376 DOCX TRACK CHANGES + JSON
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExportMessage(
+                        `[✓] Dispatched ${selectedContract.fileName} redline bundle to local workspace.`
+                      )
+                    }
+                    className="px-4 py-2 bg-[#EFECE4] text-[#141413] hover:bg-[#F6F4EE] transition-colors font-mono text-xs shrink-0"
                   >
-                    <Download className="size-3 mr-1.5" />
-                    Download Audit Report
-                  </Button>
+                    Export Redline Dossier (.DOCX) →
+                  </button>
                 </div>
               </div>
             </div>
           )}
-        </div>
         </div>
       </div>
     </section>
