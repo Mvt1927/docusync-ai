@@ -1,116 +1,195 @@
 import React from "react";
-import { Sparkles, ArrowRight, Play, Calendar, ShieldCheck, CheckCircle2, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { HeroMockup } from "@/components/HeroMockup";
 
+const legalPartners = [
+  { code: "01", label: "CRAVATH / BENCHMARK", metric: "MSA + M&A CORPUS" },
+  { code: "02", label: "SKADDEN / ARCHIVE", metric: "CROSS-BORDER INDEMNITY" },
+  { code: "03", label: "LATHAM / CORPUS", metric: "PLAYBOOK ENFORCEMENT" },
+  { code: "04", label: "KIRKLAND / VAULT", metric: "DEBT & COVENANT AUDIT" },
+  { code: "05", label: "SULLIVAN / LEDGER", metric: "REGULATORY COMPLIANCE" },
+];
+
+const technicalGuarantees = [
+  { code: "A1", spec: "14-DAY TRIAL / NO CREDIT CARD" },
+  { code: "A2", spec: "SOC2 TYPE II CERTIFIED" },
+  { code: "A3", spec: "ZERO DATA RETENTION" },
+];
+
 export function Hero() {
-  const logos = [
-    { name: "Snowflake", text: "SNOWFLAKE" },
-    { name: "Datadog", text: "DATADOG" },
-    { name: "Stripe", text: "STRIPE" },
-    { name: "Scale AI", text: "SCALE AI" },
-    { name: "Vercel", text: "VERCEL" },
-    { name: "Ramp", text: "RAMP" },
-  ];
-
   return (
-    <section className="relative pt-32 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-[#0B0F19]">
-      {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/3 w-[400px] h-[300px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-      
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Above-The-Fold Copy & CTAs */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          {/* Microscopic Eyebrow Tag */}
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-indigo-300 text-[11px] font-mono uppercase tracking-[0.15em] mb-8 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-            <span className="flex size-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
-            <span>Deterministic Legal AI</span>
-            <span className="text-white/20">•</span>
-            <span className="text-cyan-300 font-semibold">Zero Hallucinations</span>
-            <span className="text-white/20">•</span>
-            <span>1M+ Tokens</span>
-          </div>
-
-          {/* High-Impact Headline with Negative Tracking */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.06] mb-6 text-balance">
-            Enterprise Contract Intelligence at{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-200 to-indigo-200">
-              Lightning Speed
-            </span>
-          </h1>
-
-          {/* Subheadline (Refined width and line-height) */}
-          <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed mb-9 max-w-2xl mx-auto font-normal">
-            Eliminate manual contract review bottlenecks. Instantly extract structured risks, audit legal clauses against your company playbook, and auto-flag liabilities in seconds.
-          </p>
-
-          {/* Dual CTAs with Button-in-Button Trailing Icon */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-6">
-            <a
-              href="#trial"
-              className="group w-full sm:w-auto h-12 pl-6 pr-2 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-white shadow-[0_12px_32px_rgba(99,102,241,0.35),inset_0_1px_1px_rgba(255,255,255,0.25)] border border-white/20 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] inline-flex items-center justify-center gap-3"
-            >
-              <Calendar className="size-4 text-indigo-100" />
-              <span>Book a Demo</span>
-              <span className="size-8 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                <ArrowRight className="size-3.5" />
+    <section className="w-full bg-[#F6F4EE] text-[#141413] border-b border-[#DCD8CE]">
+      {/* Top Asymmetric 12-Column Swiss Editorial Grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 border-b border-[#DCD8CE]">
+        {/* Left Column (7 cols): Primary Editorial Statement & CTAs */}
+        <div className="lg:col-span-7 px-4 sm:px-8 lg:px-10 py-12 sm:py-16 lg:py-20 border-b lg:border-b-0 lg:border-r border-[#DCD8CE] flex flex-col justify-between">
+          <div>
+            {/* Left-Aligned Technical Index Bar */}
+            <div className="flex items-center gap-3 pb-4 mb-8 border-b border-[#DCD8CE]">
+              <span className="font-mono text-xs text-[#C84B31] font-medium">
+                [§]
               </span>
-            </a>
+              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#141413]">
+                DOCUSYNC // LEGAL ENGINEERING SPECIFICATION 01
+              </span>
+            </div>
 
-            <a
-              href="#sandbox"
-              className="w-full sm:w-auto h-12 px-6 rounded-full font-semibold text-xs sm:text-sm border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] text-slate-200 hover:text-white backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] inline-flex items-center justify-center gap-2.5"
-            >
-              <Play className="size-3.5 text-cyan-400 fill-cyan-400/20" />
-              <span>Try Interactive Sandbox</span>
-            </a>
-          </div>
+            {/* Editorial Headline */}
+            <h1 className="font-normal tracking-tight text-4xl sm:text-6xl lg:text-[4.25rem] leading-[1.04] text-[#141413] mb-6">
+              Review Complex Contracts at{" "}
+              <span className="font-serif italic text-[#C84B31]">
+                Deterministic Speed
+              </span>{" "}
+              With Zero Hallucinations.
+            </h1>
 
-          {/* Micro Risk-Reversal right below CTA */}
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-xs text-slate-400">
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <CheckCircle2 className="size-3.5 text-emerald-400" />
-              14-day free trial
-            </span>
-            <span className="text-slate-600">•</span>
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <CheckCircle2 className="size-3.5 text-emerald-400" />
-              No credit card required
-            </span>
-            <span className="text-slate-600">•</span>
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <Lock className="size-3.5 text-cyan-400" />
-              SOC 2 Type II Certified
-            </span>
-          </div>
-        </div>
+            {/* Conversion Copywriting Subheadline */}
+            <p className="text-base sm:text-lg text-[#6E6A63] leading-relaxed max-w-2xl mb-10 font-normal">
+              Parse 100-page Master Services Agreements against your corporate
+              playbook in 1.8 seconds. Every flagged liability, uncapped
+              indemnity, and suggested redline is anchored to an exact clause
+              citation.
+            </p>
 
-        {/* Hero Interactive UI Mockup */}
-        <div id="product" className="relative max-w-5xl mx-auto mb-16 sm:mb-20">
-          <HeroMockup />
-        </div>
-
-        {/* Social Proof Sub-bar */}
-        <div className="text-center pt-8 border-t border-slate-800/60 max-w-5xl mx-auto">
-          <p className="text-xs uppercase font-semibold tracking-wider text-slate-400 mb-6">
-            Trusted by legal & operations teams at fast-growing companies
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-65 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-            {logos.map((logo) => (
-              <span
-                key={logo.name}
-                className="font-mono text-sm sm:text-base font-extrabold tracking-widest text-slate-300 hover:text-white transition-colors"
+            {/* Square Architectural CTAs */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-12">
+              <a
+                href="#trial"
+                className="rounded-none bg-[#141413] text-[#F6F4EE] hover:bg-[#C84B31] text-xs sm:text-sm font-medium px-7 py-4 transition-colors inline-flex items-center justify-center gap-3 whitespace-nowrap"
               >
-                {logo.text}
-              </span>
+                <span>Start 14-Day Free Trial →</span>
+              </a>
+              <a
+                href="#sandbox"
+                className="rounded-none border border-[#141413] bg-transparent text-[#141413] hover:bg-[#EFECE4] text-xs sm:text-sm font-medium px-7 py-4 transition-colors inline-flex items-center justify-center gap-3 whitespace-nowrap"
+              >
+                <span>Inspect Live Sandbox [§]</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Technical Assurance Ledger Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 border border-[#DCD8CE] bg-[#EFECE4]">
+            {technicalGuarantees.map((item) => (
+              <div
+                key={item.code}
+                className="px-3.5 py-3 border-b sm:border-b-0 sm:border-r last:border-b-0 last:border-r-0 border-[#DCD8CE] flex items-center gap-2"
+              >
+                <span className="font-mono text-[10px] text-[#C84B31]">
+                  [{item.code}]
+                </span>
+                <span className="font-mono text-[10px] tracking-wider uppercase text-[#141413]">
+                  {item.spec}
+                </span>
+              </div>
             ))}
           </div>
         </div>
+
+        {/* Right Column (5 cols): Real-Time System Telemetry & Concordance Ledger */}
+        <div className="lg:col-span-5 flex flex-col justify-between bg-[#EFECE4]">
+          {/* Telemetry Header */}
+          <div className="px-6 py-4 border-b border-[#DCD8CE] flex items-center justify-between bg-[#F6F4EE]">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-[#141413]">
+              SYSTEM TELEMETRY / CONCORDANCE LEDGER
+            </span>
+            <span className="font-mono text-[11px] text-[#2D5A3C]">
+              [✓] VERIFIED
+            </span>
+          </div>
+
+          {/* Primary Metrics Grid (2 Cells) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 border-b border-[#DCD8CE]">
+            <div className="p-6 border-b sm:border-b-0 sm:border-r border-[#DCD8CE] bg-[#F6F4EE]">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6A63] block mb-2">
+                THROUGHPUT BENCHMARK
+              </span>
+              <div className="font-mono text-2xl sm:text-3xl font-normal text-[#141413] tracking-tight">
+                1.8s / 100 trang
+              </div>
+              <span className="font-mono text-[11px] text-[#6E6A63] mt-1.5 block">
+                Deterministic AST clause parser
+              </span>
+            </div>
+
+            <div className="p-6 bg-[#F6F4EE]">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6A63] block mb-2">
+                EXTRACTION PRECISION
+              </span>
+              <div className="font-mono text-2xl sm:text-3xl font-normal text-[#2D5A3C] tracking-tight">
+                99.4%
+              </div>
+              <span className="font-mono text-[11px] text-[#6E6A63] mt-1.5 block">
+                Zero ungrounded citations
+              </span>
+            </div>
+          </div>
+
+          {/* Citation Verification Spec */}
+          <div className="px-6 py-4 border-b border-[#DCD8CE] bg-[#EFECE4] flex items-center justify-between">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-[#6E6A63]">
+              CONTEXT WINDOW CAPACITY
+            </span>
+            <span className="font-mono text-xs text-[#141413] font-medium">
+              1,000,000 TOKENS / 100% CITATION LOCK
+            </span>
+          </div>
+
+          {/* Reference Corpus / Legal Partners Table */}
+          <div className="flex-1 flex flex-col justify-between">
+            <div className="px-6 py-3 border-b border-[#DCD8CE] bg-[#F6F4EE]">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6A63]">
+                INSTITUTIONAL PLAYBOOK BENCHMARKS
+              </span>
+            </div>
+
+            <div className="divide-y divide-[#DCD8CE]">
+              {legalPartners.map((partner) => (
+                <div
+                  key={partner.code}
+                  className="px-6 py-3.5 flex items-center justify-between bg-[#F6F4EE] hover:bg-[#EFECE4] transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-[11px] text-[#C84B31]">
+                      {partner.code}
+                    </span>
+                    <span className="font-mono text-xs font-medium tracking-wider text-[#141413]">
+                      {partner.label}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63]">
+                    {partner.metric}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-6 py-3.5 border-t border-[#DCD8CE] bg-[#EFECE4] flex items-center justify-between">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6A63]">
+                AUDIT LOGGING PROTOCOL
+              </span>
+              <span className="font-mono text-[11px] text-[#141413]">
+                SHA-256 IMMUTABLE LEDGER
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Interactive Archival Courtroom Workbench */}
+      <div id="product" className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10 py-12 sm:py-16">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-6 border-b border-[#DCD8CE]">
+          <div className="flex items-center gap-2.5">
+            <span className="font-mono text-xs text-[#C84B31]">[§ 01.A]</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#141413]">
+              ARCHIVAL COURTROOM WORKBENCH / LIVE REDLINE ENGINE
+            </span>
+          </div>
+          <span className="font-mono text-[11px] text-[#6E6A63]">
+            SELECT ANY CLAUSE BELOW TO INSPECT PLAYBOOK DEVIATION & REDLINE DIFF
+          </span>
+        </div>
+
+        <HeroMockup />
       </div>
     </section>
   );
