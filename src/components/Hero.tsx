@@ -104,7 +104,7 @@ export function Hero() {
                 THROUGHPUT BENCHMARK
               </span>
               <div className="font-mono text-2xl sm:text-3xl font-normal text-[#141413] tracking-tight">
-                1.8s / 100 trang
+                1.8s / 100 pages
               </div>
               <span className="font-mono text-[11px] text-[#6E6A63] mt-1.5 block">
                 Deterministic AST clause parser
