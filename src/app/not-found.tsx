@@ -1,30 +1,28 @@
 import React from "react";
 import Link from "next/link";
-import { FileQuestion, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full text-center flex flex-col items-center">
-        <div className="size-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-6 shadow-xl shadow-indigo-950/40">
-          <FileQuestion className="size-8 text-indigo-400" />
+    <div className="min-h-[100dvh] bg-[#F6F4EE] text-[#141413] flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center flex flex-col items-center border border-[#DCD8CE] bg-[#EFECE4] p-8 rounded-md">
+        <div className="size-12 rounded-md bg-[#F6F4EE] border border-[#DCD8CE] flex items-center justify-center mb-5 font-mono text-sm text-[#C84B31]">
+          404
         </div>
-        <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 mb-2">
-          404 — Contract Clause Not Found
+        <span className="text-xs font-mono uppercase tracking-widest text-[#C84B31] mb-2">
+          Clause Reference Not Found
         </span>
-        <h1 className="text-3xl font-extrabold text-white mb-3">
+        <h1 className="font-serif text-3xl font-normal text-[#141413] tracking-tight mb-3">
           Page Not Available
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-8">
-          The legal document or route you are looking for has been relocated or expired. Return to the DocuSync AI intelligence portal.
+        <p className="text-xs sm:text-sm text-[#6E6A63] leading-relaxed mb-8">
+          The legal document or route you are looking for has been relocated or expired. Return to the DocuSync AI workspace.
         </p>
         <Link
           href="/"
-          className="bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white text-xs font-semibold h-10 px-5 rounded-lg inline-flex items-center gap-2 shadow-lg shadow-indigo-500/25"
+          className="bg-[#141413] hover:bg-[#C84B31] text-[#F6F4EE] text-xs font-mono uppercase tracking-wider h-10 px-5 rounded-md inline-flex items-center gap-2 transition-colors"
         >
-          <ArrowLeft className="size-4" />
-          <span>Return to Landing Page</span>
+          <span aria-hidden="true">&larr;</span>
+          <span>Return to Workspace</span>
         </Link>
       </div>
     </div>
